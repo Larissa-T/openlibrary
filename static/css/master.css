@@ -1334,11 +1334,25 @@ div#content div.contentLists {
     color: #666;
     font-size: 14px;
 }
+
 .resultsCovers a {text-decoration: none;}
+
 ul.homeCarousel {list-style-type:none;height:200px;overflow:hidden;margin-left:0!important;margin-bottom:0!important;}
 ul.homeCarousel li {position:relative;float:left;list-style:none!important;}
 ul.homeCarousel .hiddenCoverMagic {width:100px;height:200px;}
 ul.homeCarousel .hiddenCoverMagic div, .hiddenCoverMagic a {display:none;}
+
+ul.categoryCarousel {list-style-type:none;height:140px;overflow:hidden;margin-left:0!important;margin-bottom:0!important;}
+ul.categoryCarousel li {position:relative;float:left;list-style:none!important;}
+ul.categoryCarousel .hiddenCoverMagic {width:100px;height:140px;}
+ul.categoryCarousel .hiddenCoverMagic div, .hiddenCoverMagic a {display:none;}
+
+li.category-item { height: 140px; padding: 5px 0px; }
+.category-icon { margin: 0 auto; width: 55px; }
+img.category-img { width: 55px; }
+p.category-count { text-align: center; font-size: .9em; line-height: 1; color: #999; padding: 0px; margin: 0px; margin-top: 5px;}
+p.category-title { text-align: center; line-height: 1; margin: 0px; margin-top: 5px;}
+
 
 div.chartHome {float:left;width:160px;margin:0 29px 30px 0;text-align:center;}
 div.chartHome .chartShow {width:150px;height:60px;padding:0 5px;border-bottom: 1px solid #666;cursor:pointer;}
@@ -2345,6 +2359,24 @@ div.subjects {
 
 
 /* RESULTS CAROUSEL SKIN */
+.resultsIcons .jcarousel-container { height: 140px; padding: 0px;}
+.resultsIcons .jcarousel-container-horizontal { height: 140px; padding: 0px;} 
+
+.resultsIcons { height: 140px; margin-top: 5px; }
+.resultsIcons .jcarousel-container {
+    width: 958px;
+    padding: 10px 0px;
+}
+.resultsIcons .jcarousel-clip {
+    width: 918px;
+}
+.resultsIcons .jcarousel-item-horizontal {
+    width: 153px;
+    margin-right: 0;
+}
+.resultsIcons .jcarousel-next-horizontal { top: 35px;}
+.resultsIcons .jcarousel-prev-horizontal { top: 35px; left: -15px;}
+
 #editionsCovers .jcarousel-container,
 #editionsList .jcarousel-container {
     width: 918px;

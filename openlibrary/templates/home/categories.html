@@ -1,9 +1,10 @@
 $def with (id="ol-carousel")
 
-$ categories = [{"url": "/search/subjects?q=art", "count": "32,608", "name": "art"}, {"url": "/search/subjects?q=sci-fi", "count": "5,023", "name": "sci-fi_fantasy"}, {"url": "/search/subjects?q=biographies", "count": "23,512", "name": "biographies"}, {"url": "/search/subjects?q=recipes", "count": "3,015", "name": "recipes"}, {"url": "/search/subjects?q=romance", "count": "11,426", "name": "romance"}, {"url": "/search/subjects?q=textbooks", "count": "22,348", "name": "textbooks"}, {"url": "/search/subjects?q=children", "count": "23,124", "name": "children"}, {"url": "/search/subjects?q=history", "count": "52,305", "name": "history"}, {"url": "/search/subjects?q=medicine", "count": "18,693", "name": "medicine"}, {"url": "/search/subjects?q=religion", "count": "20,221", "name": "religion"}, {"url": "/search/subjects?q=mysteries", "count": "5,028", "name": "mysteries"}, {"url": "/search/subjects?q=theater", "count": "9,365", "name": "plays"}, {"url": "/search/subjects?q=music", "count": "13,797", "name": "music"}, {"url": "/search/subjects?q=classics", "count": "89,922", "name": "classics"}, {"url": "/search/subjects?q=science", "count": "63,581", "name": "science"}]
+$# These should come from the server / db
+$ categories = ["art", "sci-fi", "fantasy", "biographies", "recipes", "romance", "textbooks", "children", "history", "medicine", "religion", "mysteries", "plays", "music", "classics", "science"]
 
 <div class="head">
-  <h2 class="inline"><a href="/read">Browse By Category</a></h2>
+  <h2 class="inline"><a href="/read">Books By Category</a></h2>
   <p class="inline sansserif large collapse">
   </p>
 </div>
@@ -27,19 +28,46 @@ $ categories = [{"url": "/search/subjects?q=art", "count": "32,608", "name": "ar
         scroll:6,
         itemLoadCallback: {onBeforeAnimation: load_covers}
     });
-  })
+
+    var Subject = {
+	count: function (subject, callback) {
+	    var url = '/subjects/' + subject + '.json';
+	    \$.ajax({
+		type: "GET",
+		url: url, 
+		success: function(result) {
+		    var cnt = result.work_count || 0;
+		    if (callback) {
+		        return callback(cnt);
+		    }
+		    return cnt;
+	       }
+           });
+        }
+    };
+
+    /* Loads categories carousel with number of books per category */
+    \$('.category-count').each(function(index, subject) {
+	var name = \$(subject).attr('name');
+        Subject.count(name, function(count) {
+	    \$('[name="' + name + '"]').text(count + ' books');
+	});
+    });
+})
 </script>
 
   <div class="contentLists results">
-    <div class="covers resultsCovers" style="height: 200px;">
-        <ul class="homeCarousel jcarousel-skin-OL" id="$id" style="height: 200px;">
+    <div class="resultsIcons">
+        <ul class="categoryCarousel" id="$id">
             $for category in categories:
-                <li style="line-height: 1;">
-		  <div style="margin: 0 auto; width: 100px;">
-		    <a href="$(category['url'])"><img src="/static/images/categories/$(category['name']).svg" style="width: 100px;"/></a>
+                <li class="category-item">
+		  <div class="category-icon">
+                      <a href="/subjects/$(category)">
+                          <img class="category-img" src="/static/images/categories/$(category).svg"/>
+                      </a>
 		  </div>
-		  <p style="text-align: center; line-height: 1;">$category['name'].replace('_', ' & ').title()</p>
-		  <p style="text-align: center; font-size: .9em; line-height: 1; color: #999;">$category['count'] books</p>
+		  <p class="category-title">$category.replace('_', ' & ').title()</p>
+		  <p class="category-count" name="$(category)"></p>
 		  
                 </li>
         </ul>
